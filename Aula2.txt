@@ -1,0 +1,27 @@
+Programação Assíncrona - 
+
+Thread - Não necessita rodar necessariamente em paralelo
+
+No JS, enquanto uma linha de código está rodando, nenhuma outra roda em paralelo.
+
+Promise - Um objeto com um metódo que é chamado quando há uma requisição.
+
+Await - recurso do JS que trabalha com Promise, que para a execuçâo do programa e só volta a rodar quando obtêm o resultado.
+
+--------Instalando o Vue.js----------
+npm i -g @vue/cli
+
+vue create app-dia2
+-------------------------------------
+
+Vue.js trabalha com MVVM(Model View View Model), e com a componentização, tudo é um componente dentro do Vue.js
+
+<b-form-group
+            label="Primeiro operando:"
+            label-for="operando1"
+            description="Informe o primeiro número"
+        >
+            <b-form-input name="operando1"></b-form-input>
+        </b-form-group>
+
+Na declaração do Middleware, o programa executa na ordem de declaração.
