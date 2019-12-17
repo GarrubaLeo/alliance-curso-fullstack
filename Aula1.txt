@@ -1,0 +1,11 @@
+Processamento dentro do servidor - Back-End
+Renderização - Front-End
+
+Front-End - É o que o servidor entrega/exibe para o client.
+
+HTML Dinâmico - Produzido através de um programa, dependendo do resultado, o HTML sofre alterações.
+
+NPM Init - pacote onde irá ficar armazenado o programa
+
+npm install express --save: O --save insere no package.json o "dependencies", que mostra ao pacote que o programa depende do express
+
