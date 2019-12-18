@@ -1,56 +1,67 @@
 <template>
     <b-form>
-      <p>
-          <b-form-group
-            label="Primeiro operando:"
-            label-for="txtOperando1">
-            <b-form-input id="txtOperando1" v-model="operando1" />
-          </b-form-group>
-      </p>
-      <p>
-          <b-form-group
-            label="Segundo operando:"
-            label-for="txtOperando2">
-            <b-form-input id="txtOperando2" v-model="operando2" />
-          </b-form-group>
-      </p>
-      <p>
-          <b-form-group
-            label="Operador"
-            label-for="cboOperador">
-            <select name="cboOperador" v-model="operador">
-                <option value="+">+</option>
-                <option value="-">-</option>
-                <option value="*">*</option>
-                <option value="/">/</option>
-            </select>
-          </b-form-group>
-      </p>
-      <p>
-        <b-button variant="success" v-on:click="calcular()">Calcular</b-button>
-      </p>
-      <hr />
-      <div v-if="historicos.length > 0">
-        <h3>Último Resultado: {{ ultimoResultado }}</h3>
-        <p />
-        <b-row>
-            <b-col sm="8">
-                <h3>Histórico</h3>
-            </b-col>
-            <b-col>
-                <b-button variant="secondary" v-on:click="limparTudo()">Limpar tudo</b-button>
-            </b-col>
-        </b-row>
-        <b-row v-for="(linha, index) in historicos" v-bind:key="index">
-            <b-col sm="8">{{linha.operando1}} {{linha.operador}} {{linha.operando2}} = {{linha.resultado}}</b-col>
-            <b-col><a v-on:click.prevent="excluiHistorico(index)">Excluir</a></b-col>
-        </b-row>
-        <hr />
-        <b-row>
-            <b-col sm="8">Total calculado</b-col>
-            <b-col>{{somaTudo}}</b-col>
-        </b-row>
-      </div>
+        <div>
+            <b-card>
+                <p>
+                    <b-form-group
+                        label="Primeiro operando:"
+                        label-for="txtOperando1">
+                        <b-form-input id="txtOperando1" v-model="operando1" />
+                    </b-form-group>
+                </p>
+
+                <p>
+                    <b-form-group
+                        label="Segundo operando:"
+                        label-for="txtOperando2">
+                        <b-form-input id="txtOperando2" v-model="operando2" />
+                    </b-form-group>
+                </p>
+
+                <p>
+                    <b-form-group
+                        label="Operador"
+                        label-for="cboOperador">
+                        <select name="cboOperador" v-model="operador">
+                            <option value="+">+</option>
+                            <option value="-">-</option>
+                            <option value="*">*</option>
+                            <option value="/">/</option>
+                        </select>
+                    </b-form-group>
+                </p>
+
+                <p>
+                    <b-button variant="success" v-on:click="calcular()">Calcular</b-button>
+                </p>
+                <hr />
+            </b-card>
+        </div>
+
+        <div v-if="historicos.length > 0">
+            <h3>Último Resultado: {{ ultimoResultado }}</h3>
+            <p />
+            <b-row>
+                <b-col sm="8">
+                    <h3>Histórico</h3>
+                </b-col>
+
+                <b-col>
+                    <b-button variant="secondary" v-on:click="limparTudo()">Limpar tudo</b-button>
+                </b-col>
+            </b-row>
+
+            <b-row v-for="(linha, index) in historicos" v-bind:key="index">
+                <b-col sm="8">{{linha.operando1}} {{linha.operador}} {{linha.operando2}} = {{linha.resultado}}</b-col>
+                <b-col><a v-on:click.prevent="excluiHistorico(index)">Excluir</a></b-col>
+            </b-row>
+
+            <hr />
+            <b-row>
+                <b-col sm="8">Total calculado</b-col>
+                <b-col>{{somaTudo}}</b-col>
+            </b-row>
+        </div>
     </b-form>
 </template>
 
