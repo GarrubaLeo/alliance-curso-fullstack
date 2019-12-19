@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
     let sql = `insert into BICICLETAS(CODIGO, ATIVO) values
         ('${payload.codigo}', '${payload.ativo}');
     `;
-    console.log(sql);
+    
     const client = criaClient();
     await client.connect();
     await client.query(sql);
@@ -45,7 +45,6 @@ router.put('/:codigo', async (req, res) => {
         CODIGO = '${codigo}';    
     `;
 
-    console.log(sql);
     const client = criaClient();
     await client.connect();
     await client.query(sql);
@@ -58,12 +57,11 @@ router.put('/:codigo', async (req, res) => {
 router.delete('/:codigo', async (req, res) => {
     let codigo = req.params.codigo;
 
-    let sql = `update BICICLETAS
-    where
-        CODIGO = '${codigo}';    
+    let sql = `delete from BICICLETAS
+        where
+            CODIGO = '${codigo}';    
     `;
 
-    console.log(sql);
     const client = criaClient();
     await client.connect();
     await client.query(sql);
