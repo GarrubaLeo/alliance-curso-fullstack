@@ -9,7 +9,7 @@
         >
             <b-form-input
                 id="txtCodigo"
-                v-model="content.codigo"
+                v-model="content.codigo_ativo"
                 type="text"
                 required
                 placeholder="Código do Ativo"
@@ -21,13 +21,13 @@
         <b-form-group
             id="input-quantidadade"
             label="Quantidade de ativos desejados"
-            label-for="numQuantidade"
+            label-for="txtQuantidade"
             description="Informe a quantidade de ativos"
         >
             <b-form-input
-                id="numQuantidade"
+                id="txtQuantidade"
                 v-model="content.quantidade"
-                type="number"
+                type="text"
                 required
                 placeholder="Digite a quantidade"
                 @input="handleInput"
@@ -59,7 +59,7 @@
         data() {
             return {
                 content: {
-                    codigo: this.value.codigo,
+                    codigo_ativo: this.value.codigo,
                     quantidade: this.value.quantidade,
                     preco: this.value.preco,
                     isNew: this.value.isNew
