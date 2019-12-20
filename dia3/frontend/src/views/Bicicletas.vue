@@ -14,8 +14,8 @@
         />
       </template>
 
-      <template slot="cell(actionDelete)" slot-scope="{ item: {codigo} }">
-        <b-button v-on:click="excluirBicicleta(codigo)">
+      <template slot="cell(actionDelete)" slot-scope="{ item }">
+        <b-button v-on:click="beforeExcluirBicicleta(item)">
           <font-awesome-icon icon="trash"/>
         </b-button>
       </template>
@@ -46,6 +46,15 @@
       @ok="editarBicicleta"
       >
       <FormBicicleta v-model="bicicletaAtual"/>
+    </b-modal>
+
+    <b-modal
+      id="excluirBicicleta"
+      :title="'Excluir Bicicleta - ' + bicicletaAtual.codigo"
+      ok-title="Excluir"
+      cancel-title="Cancelar"
+      @ok="editarBicicleta"
+    >
     </b-modal>
   </div>
 </template>
@@ -89,8 +98,20 @@ import axios from 'axios';
     },
 
     methods: {
-      excluirBicicleta(codigo) {
-        return codigo;
+      beforeExcluirBicicleta(bicicleta){
+        this.bicicletaAtual = {
+          codigo: bicicleta.codigo
+        };
+        this.$root.$emit('bv::show::modal', 'excluirBicicleta')
+      },
+
+      async excluirBicicleta() {
+        try{
+          await axios.delete(`http://localhost:3000/bicicletas/${this.bicicletaAtual.codigo}`);
+          await this.carregaBicicletas();
+        } catch (err) {
+          alert('Erro ao excluir bicicleta');
+        }
       },
 
       beforeEditaBicicleta(bicicleta){
