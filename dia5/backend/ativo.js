@@ -3,24 +3,6 @@ import { Client } from 'pg';
 
 const router = Router();
 
-// router.get('/', async (req, res) => {
-//     let dados = [];
-//     const client = criaClient();
-
-//     await client.connect();
-
-//     let queryResult = await client.query("select CODIGO, DESCRICAO from ATIVOS;");
-//     for(let row of queryResult.rows) {
-//         dados.push({
-//             codigo: row.codigo,
-//             descricao: row.descricao
-//         });
-
-//         await client.end();
-//         res.send(JSON.stringify(dados));
-//     };
-// });
-
 router.get('/', async (req, res) =>{
     let resultado = [];
     const client = criaClient();
@@ -80,6 +62,7 @@ router.delete('/:codigo', async (req, res) => {
             CODIGO = '${codigo}';
     `;
     
+    console.log(sql);
     const client = criaClient();
     await client.connect();
     await client.query(sql);
