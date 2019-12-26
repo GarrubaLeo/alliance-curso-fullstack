@@ -106,7 +106,9 @@ import axios from 'axios';
       },
 
       async excluirBicicleta() {
+      
         try{
+          console.log(this.bicicletaAtual.codigo)
           await axios.delete(`http://localhost:3000/bicicletas/${this.bicicletaAtual.codigo}`);
           await this.carregaBicicletas();
         } catch (err) {
