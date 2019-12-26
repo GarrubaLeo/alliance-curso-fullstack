@@ -31,6 +31,7 @@ router.post('/', async (req, res) => {
         (nextval('usuarios_sequence'), '${payload.nome}', '${payload.telefone}', '${payload.email}', ${payload.saldoCreditos});
     `;
 
+    console.log(sql);
     const client = criaClient();
     await client.connect();
     await client.query(sql);

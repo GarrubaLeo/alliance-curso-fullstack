@@ -61,10 +61,10 @@ router.delete('/:codigo', async (req, res) => {
         where
             CODIGO = '${codigo}';    
     `;
-
+    console.log(sql);
     const client = criaClient();
     await client.connect();
-    await client.query(sql);
+    //await client.query(sql);
     await client.end();
 
     res.status(204);
