@@ -80,6 +80,26 @@ router.delete('/:codigo', async (req, res) => {
     res.send();
 });
 
+function addCreditos() {
+    router.get('/:codigo', async (req, res) => {
+        let codigo = req.params.codigo;
+        let extracao = [];
+        const client = criaClient();
+
+        await client.connect();
+        let queryResult = await client.query(`select SALDO_CREDITOs from USUARIOS where CODIGO = ${codigo};`);
+        for(let row of queryResult.rows){
+            extracao.push({
+                saldoCreditos: row.saldo_creditos
+            });
+        }
+        await client.end();
+        console.log(extracao);
+    });
+
+    saldoAtual = extracao;
+}
+
 function criaClient() {
     return new Client({
         user: 'postgres',
