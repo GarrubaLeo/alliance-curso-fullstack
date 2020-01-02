@@ -15,7 +15,7 @@
       </template>
 
       <template slot="cell(actionDelete)" slot-scope="{ item }">
-        <b-button v-on:click="beforeExcluirBicicleta(item)">
+        <b-button v-on:click="excluirBicicleta(item)">
           <font-awesome-icon icon="trash"/>
         </b-button>
       </template>
@@ -46,15 +46,6 @@
       @ok="editarBicicleta"
       >
       <FormBicicleta v-model="bicicletaAtual"/>
-    </b-modal>
-
-    <b-modal
-      id="excluirBicicleta"
-      :title="'Excluir Bicicleta - ' + bicicletaAtual.codigo"
-      ok-title="Excluir"
-      cancel-title="Cancelar"
-      @ok="editarBicicleta"
-    >
     </b-modal>
   </div>
 </template>
@@ -98,21 +89,29 @@ import axios from 'axios';
     },
 
     methods: {
-      beforeExcluirBicicleta(bicicleta){
-        this.bicicletaAtual = {
-          codigo: bicicleta.codigo
-        };
-        this.$root.$emit('bv::show::modal', 'excluirBicicleta')
+      async carregaBicicletas() {
+        this.bicicletas.splice(0, this.bicicletas.length);
+        let dados = await axios.get('http://localhost:3000/bicicletas/');
+        this.bicicletas.push(...dados.data);
       },
 
-      async excluirBicicleta() {
+      beforeNovaBicicleta() {
+        this.bicicletaAtual.codigo = '';
+        this.bicicletaAtual.ativo = 'S';
+        this.bicicletaAtual.isNew = true;
+      },
       
+      async saveNovaBicicleta() {
+        let payload = {
+          codigo: this.bicicletaAtual.codigo,
+          ativo: this.bicicletaAtual.ativo
+        };
+
         try{
-          console.log(this.bicicletaAtual.codigo)
-          await axios.delete(`http://localhost:3000/bicicletas/${this.bicicletaAtual.codigo}`);
+          await axios.post('http://localhost:3000/bicicletas/', payload);
           await this.carregaBicicletas();
-        } catch (err) {
-          alert('Erro ao excluir bicicleta');
+        } catch (err){
+          alert('Erro ao inserir bicicleta')
         }
       },
 
@@ -138,29 +137,13 @@ import axios from 'axios';
         }
       },
 
-      async carregaBicicletas() {
-        this.bicicletas.splice(0, this.bicicletas.length);
-        let dados = await axios.get('http://localhost:3000/bicicletas/');
-        this.bicicletas.push(...dados.data);
-      },
-
-      beforeNovaBicicleta() {
-        this.bicicletaAtual.codigo = '';
-        this.bicicletaAtual.ativo = 'S';
-        this.bicicletaAtual.isNew = true;
-      },
-      
-      async saveNovaBicicleta() {
-        let payload = {
-          codigo: this.bicicletaAtual.codigo,
-          ativo: this.bicicletaAtual.ativo
-        };
-
+      async excluirBicicleta(bicicletaAtual) {
         try{
-          await axios.post('http://localhost:3000/bicicletas/', payload);
+          console.log(this.bicicletaAtual.codigo);
+          await axios.delete(`http://localhost:3000/bicicletas/${bicicletaAtual.codigo}`);
           await this.carregaBicicletas();
-        } catch (err){
-          alert('Erro ao inserir bicicleta')
+        } catch (err) {
+          alert(err);
         }
       }
     },
