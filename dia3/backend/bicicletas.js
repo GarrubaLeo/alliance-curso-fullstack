@@ -64,7 +64,7 @@ router.delete('/:codigo', async (req, res) => {
     console.log(sql);
     const client = criaClient();
     await client.connect();
-    //await client.query(sql);
+    await client.query(sql);
     await client.end();
 
     res.status(204);
